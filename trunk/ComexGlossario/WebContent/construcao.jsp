@@ -47,7 +47,7 @@
 				alunos e pelo professor responsável.</p>
 
 				<p>Assim que os dados estiverem disponíveis para tal consulta, 
-				o acesso será liberado a todos</p>
+				o acesso será liberado</p>
 				<p>&nbsp</p>
 				<p>&nbsp</p>
 				<p>&nbsp</p>
