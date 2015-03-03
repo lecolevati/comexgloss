@@ -56,7 +56,14 @@ public class AlunoBean extends HttpServlet {
 			
 			List<Termo> listaTermos = new ArrayList<Termo>();
 			try {
-				boolean valida = aDao.validaAluno(a);
+				boolean valida = false;
+				boolean admin = false;
+				if (a.getRa().trim().equals("admin")){
+					admin = true;
+				} else {
+					valida = aDao.validaAluno(a);
+				}
+
 				if (valida) {
 					url = "cadastroGlossario.jsp";
 					a = aDao.consultaAluno(a);
@@ -71,8 +78,15 @@ public class AlunoBean extends HttpServlet {
 					listaTermos = tDao.listaTermosPorAluno(a);
 					
 				} else {
-					url = "cadastroAluno.jsp";
-					erro = "Aluno não cadastrado";
+					if (admin){
+						url = "admin.jsp";
+						DisciplinaDao dDao = new DisciplinaDao();
+						listaDisciplina = dDao.consultaDisciplinas();
+					} else {
+						url = "cadastroAluno.jsp";
+						erro = "Aluno não cadastrado";						
+					}
+
 				}
 			} catch (SQLException e) {
 				erro = "RA inválido";
