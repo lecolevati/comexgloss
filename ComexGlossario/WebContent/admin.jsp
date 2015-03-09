@@ -17,7 +17,7 @@
 </script>
 </head>
 <body>
-	<c:if test="${raAluno eq admin}">
+	<c:if test="${nomeAluno eq null}">
 
 		<div id="templatemo_container">
 			<div id="templatemo_banner">
@@ -67,7 +67,7 @@
 								</tr>
 								<tr>
 									<td>Status</td>
-									<td><select id="disciplina" name="disciplina">
+									<td><select id="status" name="status">
 											<option value="0">
 												<c:out value="--Selecione uma opção--" />
 											</option>
@@ -83,9 +83,34 @@
 									</select></td>
 								</tr>
 								<tr>
-									<td colspan="2"><input type="submit" name="BuscarAdmin"
+									<td colspan="2"><input type="submit" name="BuscarAlunos"
 										value="Listar" /></td>
 								</tr>
+								<c:if test="${listaAlunos ne null}">
+								<tr>
+									<!-- TODO fazer o select já selecionado -->
+									<td colspan="2"> 
+										<c:out value="${disciplina}" />
+									</td>
+								</tr>
+								<tr>
+									<td>Alunos</td>
+									<td><select id="alunos" name="aluno">
+											<option value="0">
+												<c:out value="--Selecione uma opção--" />
+											</option>
+											<c:forEach items="${listaAlunos}" var="al">
+												<option value="<c:out value="${al.nome}"/>">
+													<c:out value="${al}" />
+												</option>
+											</c:forEach>
+									</select></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input type="submit" name="BuscarTrabalhos"
+										value="Procurar Trabalhos" /></td>
+								</tr>
+								</c:if>
 							</table>
 						</form>
 						<p>&nbsp</p>
