@@ -17,7 +17,7 @@
 </script>
 </head>
 <body>
-	<c:if test="${nomeAluno eq null}">
+	<c:if test="${usrAdm ne null}">
 
 		<div id="templatemo_container">
 			<div id="templatemo_banner">
@@ -63,7 +63,9 @@
 													<c:out value="${disc}" />
 												</option>
 											</c:forEach>
-									</select></td>
+									</select>
+									<input type="hidden" name="usrAdm" value="${userAdm}"/>
+									</td>
 								</tr>
 								<tr>
 									<td>Status</td>
@@ -89,8 +91,8 @@
 								<c:if test="${listaAlunos ne null}">
 								<tr>
 									<!-- TODO fazer o select já selecionado -->
-									<td colspan="2"> 
-										<c:out value="${disciplina}" />
+									<td colspan="2" align="center" style="color: white;"> 
+										<c:out value="${materia}" />
 									</td>
 								</tr>
 								<tr>
@@ -100,7 +102,7 @@
 												<c:out value="--Selecione uma opção--" />
 											</option>
 											<c:forEach items="${listaAlunos}" var="al">
-												<option value="<c:out value="${al.nome}"/>">
+												<option value="<c:out value="${al.ra}"/>">
 													<c:out value="${al}" />
 												</option>
 											</c:forEach>
@@ -108,10 +110,58 @@
 								</tr>
 								<tr>
 									<td colspan="2"><input type="submit" name="BuscarTrabalhos"
-										value="Procurar Trabalhos" /></td>
+										value="Procurar Trabalhos" />
+									<input type="hidden" name="codigoDisc" value="${codigoMateria}"/>
+									<input type="hidden" name="codigoStat" value="${codigoStatus}"/>
+									</td>
 								</tr>
 								</c:if>
 							</table>
+							<br />
+							<br />
+							<br />
+							<c:if test="${listaAssuntos ne null}">
+							
+							<table border="1" style="font-size: 150%">
+								<tr>
+									<td colspan="4" align="center">
+										<c:out value="${nmAluno}" />
+									 </td>
+								</tr>
+								<tr>
+									<td>
+										País
+									</td>
+									<td>
+										Assunto
+									</td>
+									<td>
+										Status
+									</td>
+									<td>
+										Validar
+									</td>
+								</tr>
+								<c:forEach items="${listaAssuntos}" var="termos">
+								<tr>
+									<td>
+										<c:out value="${termos.nomePais}"></c:out>
+									</td>
+									<td>
+										<c:out value="${termos.assunto}"></c:out>
+									</td>
+									<td>
+										<c:out value="${termos.estadoStatus}"></c:out>
+									</td>
+									<td align="center">
+										<a href="${pageContext.request.contextPath}/validar?idexc=<c:out value="${termos.codigo}"/>&idal=<c:out value="${termos.raAluno}"/>" accesskey="1" title="" target="_blank">
+					 						<img src="./images/check.png" width="16" height="16" alt="" />
+					 					</a>
+				 					</td>									
+								</tr>
+								</c:forEach>
+							</table>
+							</c:if>
 						</form>
 						<p>&nbsp</p>
 						<p>&nbsp</p>
