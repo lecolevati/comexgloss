@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.Aluno;
@@ -20,13 +21,14 @@ public class TermoDao {
 	}
 
 	public void cadastraTermo(Termo t) throws SQLException {
-		String sql = "INSERT INTO termo (ra_aluno, codigo_disciplina, codigo_pais, assunto, termo) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO termo (ra_aluno, codigo_disciplina, codigo_pais, assunto, termo, dthr) VALUES (?,?,?,?,?,?)";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, t.getRaAluno());
 		ps.setInt(2, t.getCodigoDisciplina());
 		ps.setInt(3, t.getCodigoPais());
 		ps.setString(4, t.getAssunto());
 		ps.setString(5, t.getTexto());
+		ps.setDate(6, getCurrentDate());
 		ps.execute();
 		ps.close();
 	}
@@ -37,7 +39,7 @@ public class TermoDao {
 	 * @throws SQLException
 	 */
 	public void atualizaTermo(Termo t) throws SQLException {
-		String sql = "UPDATE termo SET termo = ? WHERE codigo = ?";
+		String sql = "UPDATE termo SET termo = ?, codigo_status = 1 WHERE codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, t.getTexto());
 		ps.setInt(2, t.getCodigo());
@@ -99,4 +101,8 @@ public class TermoDao {
 		return t;
 	}
 	
+	private static java.sql.Date getCurrentDate() {
+	    java.util.Date today = new java.util.Date();
+	    return new java.sql.Date(today.getTime());
+	}
 }
