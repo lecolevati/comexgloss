@@ -79,7 +79,7 @@ public class AlunoBean extends HttpServlet {
 					
 				} else {
 					if (admin){
-						url = "admin.jsp";
+						url = "adminLogin.jsp";
 						DisciplinaDao dDao = new DisciplinaDao();
 						listaDisciplina = dDao.consultaDisciplinas();
 					} else {

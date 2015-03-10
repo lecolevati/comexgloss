@@ -32,4 +32,18 @@ public class DisciplinaDao {
 		}
 		return lista;
 	}
+	
+	public Disciplina consultaDisciplina(Disciplina disciplina) throws SQLException{
+		Disciplina d = new Disciplina();
+		String sql = "SELECT codigo, nome, sigla FROM disciplina where codigo = ?";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, disciplina.getCodigo());
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			d.setCodigo(rs.getInt("codigo"));
+			d.setNome(rs.getString("nome"));
+			d.setSigla(rs.getString("sigla"));
+		}
+		return d;
+	}
 }

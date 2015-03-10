@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Aluno;
 import model.Disciplina;
+import model.Termo;
 
 import persistence.AdminDao;
+import persistence.AlunoDao;
 import persistence.DisciplinaDao;
 
 /**
@@ -50,10 +52,17 @@ public class AdminBean extends HttpServlet {
 			//TODO Validar usuario com senha
 		} else {
 			if (request.getParameter("BuscarAlunos") != null){
+				String usuarioAdm = request.getParameter("usrAdm");
 				String erro = "";
 				String url = "admin.jsp";
 				Disciplina d = new Disciplina();
-				d.setCodigo(Integer.parseInt(request.getParameter("disciplina")));
+				if (request.getParameter("disciplina") != null){
+					d.setCodigo(Integer.parseInt(request.getParameter("disciplina")));
+				} else {
+					if (request.getParameter("codigoDisc") != null){
+						d.setCodigo(Integer.parseInt(request.getParameter("codigoDisc")));
+					}
+				}
 				int codigoStatus = Integer.parseInt(request.getParameter("status"));
 				AdminDao admDao = new AdminDao();
 				List<Aluno> listaAlunos = new ArrayList<Aluno>();
@@ -61,10 +70,15 @@ public class AdminBean extends HttpServlet {
 				try {
 					listaAlunos = admDao.listaAlunosPorDisciplinaStatus(d, codigoStatus);
 					DisciplinaDao dDao = new DisciplinaDao();
+					d = dDao.consultaDisciplina(d);
 					listaDisciplina = dDao.consultaDisciplinas();
 				} catch (SQLException e) {
 					erro = e.getMessage();
 				} finally {
+					request.setAttribute("usrAdm", usuarioAdm);
+					request.setAttribute("codigoStatus", codigoStatus);
+					request.setAttribute("materia", d.getNome());
+					request.setAttribute("codigoMateria", d.getCodigo());
 					request.setAttribute("listaAlunos", listaAlunos);
 					request.setAttribute("listaDisciplina", listaDisciplina);
 					request.setAttribute("erro", erro);
@@ -72,7 +86,64 @@ public class AdminBean extends HttpServlet {
 				}
 			} else {
 				if (request.getParameter("BuscarTrabalhos") != null){
-					//TODO lista de trabalhos por aluno da disciplina
+					String usuarioAdm = request.getParameter("usrAdm");
+					String erro = "";
+					String url = "admin.jsp";
+					Aluno a = new Aluno();
+					Disciplina d = new Disciplina();
+					a.setRa(request.getParameter("aluno"));
+					d.setCodigo(Integer.parseInt(request.getParameter("codigoDisc")));
+					int codigoStatus = Integer.parseInt(request.getParameter("codigoStat"));
+					AdminDao admDao = new AdminDao();
+					List<Aluno> listaAlunos = new ArrayList<Aluno>();
+					List<Disciplina> listaDisciplina = new ArrayList<Disciplina>();
+					List<Termo> listaTermos = new ArrayList<Termo>();
+					try {
+						listaTermos = admDao.listaAssuntosPorAlunoDisciplinaStatus(a, d, codigoStatus);
+						listaAlunos = admDao.listaAlunosPorDisciplinaStatus(d, codigoStatus);
+						DisciplinaDao dDao = new DisciplinaDao();
+						listaDisciplina = dDao.consultaDisciplinas();
+						d = dDao.consultaDisciplina(d);
+						AlunoDao aDao = new AlunoDao();
+						a = aDao.consultaAluno(a);
+					} catch (SQLException e) {
+						erro = e.getMessage();
+					} finally {
+						request.setAttribute("usrAdm", usuarioAdm);
+						request.setAttribute("nmAluno", a.getNome());
+						request.setAttribute("listaAssuntos", listaTermos);
+						request.setAttribute("codigoStatus", codigoStatus);
+						request.setAttribute("materia", d.getNome());
+						request.setAttribute("codigoMateria", d.getCodigo());
+						request.setAttribute("listaAlunos", listaAlunos);
+						request.setAttribute("listaDisciplina", listaDisciplina);
+						request.setAttribute("erro", erro);
+						request.getRequestDispatcher(url).forward(request, response);
+					}
+				} else {
+					if (request.getParameter("login") != null){
+						String erro = "";
+						String url = "admin.jsp";
+						String usuario = request.getParameter("usuario");
+						String senha = request.getParameter("senha");
+						AdminDao admDao = new AdminDao();
+						boolean valido = false;
+						List<Disciplina> listaDisciplina = new ArrayList<Disciplina>();
+						try {
+							valido = admDao.validaAdmin(usuario, senha);
+							DisciplinaDao dDao = new DisciplinaDao();
+							listaDisciplina = dDao.consultaDisciplinas();
+						} catch (SQLException e) {
+							erro = e.getMessage();
+						} finally {
+							if (valido){
+								request.setAttribute("usrAdm", usuario);
+								request.setAttribute("listaDisciplina", listaDisciplina);
+							}
+							request.setAttribute("erro", erro);
+							request.getRequestDispatcher(url).forward(request, response);
+						}
+					}
 				}
 			}
 			
