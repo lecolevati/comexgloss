@@ -13,7 +13,14 @@ public class Termo {
 	private String nomePais;
 	private String estadoStatus;
 	private String nomeAluno;
+	private String comentarios;
 	
+	public String getComentarios() {
+		return comentarios;
+	}
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
 	public String getNomeAluno() {
 		return nomeAluno;
 	}

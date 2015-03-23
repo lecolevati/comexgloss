@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import model.Aluno;
@@ -39,10 +38,11 @@ public class TermoDao {
 	 * @throws SQLException
 	 */
 	public void atualizaTermo(Termo t) throws SQLException {
-		String sql = "UPDATE termo SET termo = ?, codigo_status = 1 WHERE codigo = ?";
+		String sql = "UPDATE termo SET termo = ?, codigo_status = 1, dthr = ? WHERE codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, t.getTexto());
-		ps.setInt(2, t.getCodigo());
+		ps.setDate(2, getCurrentDate());
+		ps.setInt(3, t.getCodigo());
 		ps.execute();
 		ps.close();
 	}
@@ -57,7 +57,7 @@ public class TermoDao {
 	
 	public List<Termo> listaTermosPorAluno(Aluno a) throws SQLException{
 		List<Termo> lista = new ArrayList<Termo>();
-		String sql = "select termo.codigo, termo.ra_aluno, termo.codigo_disciplina, disciplina.sigla, termo.codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where ra_aluno = ? order by codigo_pais";
+		String sql = "select termo.comentario, termo.codigo, termo.ra_aluno, termo.codigo_disciplina, disciplina.sigla, termo.codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where ra_aluno = ? order by codigo_pais";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, a.getRa());
 		ResultSet rs = ps.executeQuery();
@@ -72,6 +72,7 @@ public class TermoDao {
 			t.setNomePais(rs.getString("pais"));
 			t.setRaAluno(rs.getString("ra_aluno"));
 			t.setSiglaDisciplina(rs.getString("sigla"));
+			t.setComentarios(rs.getString("comentario"));
 			lista.add(t);
 		}
 		rs.close();

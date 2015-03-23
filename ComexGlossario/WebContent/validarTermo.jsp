@@ -55,6 +55,23 @@
 						<c:out value="${termo}"></c:out>
 					</td>
 				</tr>
+				</table>
+				<br />
+				<br />
+				<br />
+				<table align="center">
+				<tr>
+					<td colspan="3" style="color: #F7D358">
+						Comentários do Professor
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea name="coments" rows="15" cols="42" style="resize:none">
+							<c:out value="${comentarios}" />						
+						</textarea>
+					</td>
+				</tr>			
 				<tr>
 					<td>
 						<a href="${pageContext.request.contextPath}/atualizaStatus?idexc=<c:out value="${codigo}"/>&idstat=3" accesskey="1" title="" >

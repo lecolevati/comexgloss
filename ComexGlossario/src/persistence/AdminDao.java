@@ -44,10 +44,11 @@ public class AdminDao {
 	}
 	
 	public void atualizaStatus(Termo t) throws SQLException{
-		String sql = "UPDATE termo SET codigo_status = ? WHERE codigo = ?";
+		String sql = "UPDATE termo SET codigo_status = ?, comentarios = ? WHERE codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, t.getCodigoStatus());
-		ps.setInt(2, t.getCodigo());
+		ps.setString(2, t.getComentarios());
+		ps.setInt(3, t.getCodigo());
 		ps.execute();
 		ps.close();
 	}
@@ -72,7 +73,7 @@ public class AdminDao {
 
 	public List<Termo> listaAssuntosPorAlunoDisciplinaStatus(Aluno a, Disciplina d, int codigoStatus) throws SQLException{
 		List<Termo> lista = new ArrayList<Termo>();
-		String sql = "select termo.codigo, aluno.ra, aluno.nome, termo.codigo_disciplina, disciplina.sigla as disciplina, termo.codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status, estado.estado from termo inner join aluno on aluno.ra = termo.ra_aluno inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo_disciplina = ? AND aluno.ra = ? AND termo.codigo_status = ? ORDER BY paises.nome";
+		String sql = "select termo.comentarios, termo.codigo, aluno.ra, aluno.nome, termo.codigo_disciplina, disciplina.sigla as disciplina, termo.codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status, estado.estado from termo inner join aluno on aluno.ra = termo.ra_aluno inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo_disciplina = ? AND aluno.ra = ? AND termo.codigo_status = ? ORDER BY paises.nome";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, d.getCodigo());
 		ps.setString(2, a.getRa());
@@ -90,6 +91,7 @@ public class AdminDao {
 			t.setNomePais(rs.getString("pais"));
 			t.setCodigoStatus(rs.getInt("codigo_status"));
 			t.setEstadoStatus(rs.getString("estado"));
+			t.setComentarios(rs.getString("comentarios"));
 			lista.add(t);
 		}
 		rs.close();
@@ -99,7 +101,7 @@ public class AdminDao {
 
 	public List<Termo> listaTermosPorAlunoDisciplinaStatus(Aluno a, Disciplina d, int codigoStatus) throws SQLException{
 		List<Termo> lista = new ArrayList<Termo>();
-		String sql = "select termo.codigo, aluno.ra, aluno.nome, termo.termo, termo.codigo_disciplina, disciplina.sigla as disciplina, termo.codigo_pais, paises.nome as pais, termo.assunto,	termo.termo, termo.codigo_status, estado.estado from termo inner join aluno on aluno.ra = termo.ra_aluno inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo_disciplina = ? AND aluno.ra = ? AND termo.codigo_status = ? ORDER BY paises.nome";
+		String sql = "select termo.comentarios, termo.codigo, aluno.ra, aluno.nome, termo.termo, termo.codigo_disciplina, disciplina.sigla as disciplina, termo.codigo_pais, paises.nome as pais, termo.assunto,	termo.termo, termo.codigo_status, estado.estado from termo inner join aluno on aluno.ra = termo.ra_aluno inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo_disciplina = ? AND aluno.ra = ? AND termo.codigo_status = ? ORDER BY paises.nome";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, codigoStatus);
 		ps.setString(2, a.getRa());
@@ -118,6 +120,7 @@ public class AdminDao {
 			t.setCodigoStatus(rs.getInt("codigo_status"));
 			t.setEstadoStatus(rs.getString("estado"));
 			t.setTexto(rs.getString("termo"));
+			t.setComentarios(rs.getString("comentarios"));
 			lista.add(t);
 		}
 		rs.close();
