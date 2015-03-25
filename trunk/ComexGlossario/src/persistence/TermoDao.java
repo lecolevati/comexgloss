@@ -57,7 +57,7 @@ public class TermoDao {
 	
 	public List<Termo> listaTermosPorAluno(Aluno a) throws SQLException{
 		List<Termo> lista = new ArrayList<Termo>();
-		String sql = "select termo.comentario, termo.codigo, termo.ra_aluno, termo.codigo_disciplina, disciplina.sigla, termo.codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where ra_aluno = ? order by codigo_pais";
+		String sql = "select termo.codigo, termo.ra_aluno, termo.codigo_disciplina, disciplina.sigla, termo.codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where ra_aluno = ? order by codigo_pais";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, a.getRa());
 		ResultSet rs = ps.executeQuery();
@@ -72,7 +72,6 @@ public class TermoDao {
 			t.setNomePais(rs.getString("pais"));
 			t.setRaAluno(rs.getString("ra_aluno"));
 			t.setSiglaDisciplina(rs.getString("sigla"));
-			t.setComentarios(rs.getString("comentario"));
 			lista.add(t);
 		}
 		rs.close();
@@ -81,7 +80,7 @@ public class TermoDao {
 	}
 	
 	public Termo consultaTermosPorCodigo(Termo t) throws SQLException{
-		String sql = "select termo.termo, termo.codigo as cod, termo.ra_aluno, termo.codigo_disciplina as codigo_disciplina, disciplina.sigla, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status as codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
+		String sql = "select termo.comentarios, termo.termo, termo.codigo as cod, termo.ra_aluno, termo.codigo_disciplina as codigo_disciplina, disciplina.sigla, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status as codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, t.getCodigo());
 		ResultSet rs = ps.executeQuery();
@@ -96,6 +95,7 @@ public class TermoDao {
 			t.setRaAluno(rs.getString("ra_aluno"));
 			t.setSiglaDisciplina(rs.getString("sigla"));
 			t.setTexto(rs.getString("termo"));
+			t.setComentarios(rs.getString("comentarios"));
 		}
 		rs.close();
 		ps.close();

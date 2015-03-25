@@ -138,6 +138,7 @@ public class GlossarioBean extends HttpServlet {
 					request.setAttribute("termoDisciplina", t.getSiglaDisciplina());
 					request.setAttribute("termoPais", t.getNomePais());
 					request.setAttribute("termoCodigo", t.getCodigo());
+					request.setAttribute("termoComentarios", t.getComentarios());
 
 					request.setAttribute("listaDisciplina", listaDisciplina);
 					request.setAttribute("listaPaises", listaPaises);

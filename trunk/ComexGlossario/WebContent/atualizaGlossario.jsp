@@ -43,7 +43,9 @@
 
 
 					<div class="header_01">Atualização de Termos</div>
-					<h2><c:out value="${mensagem}" /></h2>
+					<h2>
+						<c:out value="${mensagem}" />
+					</h2>
 					<form action="glossario" method="post">
 						<p>
 							<c:if test="${not empty erro}">
@@ -65,7 +67,8 @@
 							<tr>
 								<td>Disciplina</td>
 								<td><input type="text" name="disciplina" size="40"
-									readonly="readonly" value="<c:out value="${termoDisciplina}" />" /></td>
+									readonly="readonly"
+									value="<c:out value="${termoDisciplina}" />" /></td>
 							</tr>
 							<tr>
 							</tr>
@@ -81,17 +84,27 @@
 							</tr>
 							<tr>
 								<td>Assunto</td>
-								<td><input type="text" name="assunto" size="40" value="${termoAssunto}" readonly="readonly"/></td>
+								<td><input type="text" name="assunto" size="40"
+									value="${termoAssunto}" readonly="readonly" /></td>
 							</tr>
+							<c:if test="${termoComentarios ne null}">
+								<tr>
+									<td>Comentários Prof.</td>
+									<td style="max-height: 150px;"><textarea rows="15"
+											cols="42" readonly="readonly">
+											<c:out value="${termoComentarios}" />
+										</textarea></td>
+								</tr>
+							</c:if>
 							<tr>
 								<td>Texto (*Apenas texto)</td>
-								<td>
-									<textarea rows="15" cols="42" name="texto" style="resize:none">
+								<td><textarea rows="15" cols="42" name="texto"
+										style="resize: none">
 										<c:out value="${termoTexto}" />
-									</textarea>
-									<input type="hidden" value="${termoCodigo}" name="termocodigo" />
+									</textarea> <input type="hidden" value="${termoCodigo}" name="termocodigo" />
 								</td>
 							</tr>
+
 							<tr>
 								<td colspan="2"><input type="submit" name="UpdateGlossario"
 									value="Atualizar" /></td>
@@ -113,9 +126,9 @@
 				<div class="margin_bottom_20 h_divider"></div>
 				<div class="margin_bottom_20"></div>
 
-				 <div class="column_w920" align="center">
+				<div class="column_w920" align="center">
 					<jsp:include page="footerTable.jsp" />
-				 </div>
+				</div>
 
 				<div class="cleaner"></div>
 			</div>
