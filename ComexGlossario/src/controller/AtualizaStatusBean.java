@@ -43,21 +43,31 @@ public class AtualizaStatusBean extends HttpServlet {
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String erro = "";
-		int codigoTermo = Integer.parseInt(request.getParameter("idexc"));
-		int codigoStatus = Integer.parseInt(request.getParameter("idstat"));
+//		String erro = "";
+		int codigoTermo = Integer.parseInt(request.getParameter("codigoTermo"));
+		String opcao = request.getParameter("opcoes");
+		String coment = request.getParameter("coments");
 		AdminDao admDao = new AdminDao();
 		Termo t = new Termo();
 		t.setCodigo(codigoTermo);
-		t.setCodigoStatus(codigoStatus);
+		if (opcao.equals("aprovado")){
+			t.setCodigoStatus(3);
+		} else {
+			if (opcao.equals("corrigir")){
+				t.setCodigoStatus(2);
+			} else {
+				t.setCodigoStatus(5);
+			}
+		}
+		t.setComentarios(coment);
 		try {
-			if (codigoStatus == 5){
+			if (t.getCodigoStatus() == 5){
 				admDao.reprovaTermo(t);
 			} else {
 				admDao.atualizaStatus(t);	
 			}
 		} catch (SQLException e) {
-			erro = e.getMessage();
+//			erro = e.getMessage();
 		} finally{
 			request.getRequestDispatcher("close.html").forward(request, response);
 		}

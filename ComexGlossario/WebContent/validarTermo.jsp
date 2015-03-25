@@ -7,10 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 	<c:if test="${termo ne null}">
 		<div align="center">
+			<form action="atualizaStatus" method="post">
 			<table border="1" style="font-size: 160%">
 				<tr>
 					<td style="color: #F7D358">
@@ -53,6 +55,7 @@
 				<tr>
 					<td colspan="3">
 						<c:out value="${termo}"></c:out>
+						<input type="hidden" name="codigoTermo" value="${codigo}" />
 					</td>
 				</tr>
 				</table>
@@ -67,29 +70,23 @@
 				</tr>
 				<tr>
 					<td>
-						<textarea name="coments" rows="15" cols="42" style="resize:none">
-							<c:out value="${comentarios}" />						
-						</textarea>
+						<textarea name="coments" rows="15" cols="80" style="resize:none" ></textarea>
 					</td>
 				</tr>			
 				<tr>
-					<td>
-						<a href="${pageContext.request.contextPath}/atualizaStatus?idexc=<c:out value="${codigo}"/>&idstat=3" accesskey="1" title="" >
-					 		<img src="./images/aprovado.png" width="16" height="16" alt="" />
-					 	</a>
+					<td align="center">
+						<input type="radio" name="opcoes" value="aprovado"><img src="./images/aprovado.png" width="16" height="16" alt="" />
+						<input type="radio" name="opcoes" value="corrigir" checked="checked"><img src="./images/corrigir.png" width="16" height="16" alt="" />
+						<input type="radio" name="opcoes" value="reprovado"><img src="./images/reprovado.png" width="16" height="16" alt="" />
 					</td>
-					<td>
-						<a href="${pageContext.request.contextPath}/atualizaStatus?idexc=<c:out value="${codigo}"/>&idstat=2" accesskey="1" title="" >
-					 		<img src="./images/corrigir.png" width="16" height="16" alt="" />
-					 	</a>
-					</td>
-					<td>
-						<a href="${pageContext.request.contextPath}/atualizaStatus?idexc=<c:out value="${codigo}"/>&idstat=5" accesskey="1" title="" >
-					 		<img src="./images/reprovado.png" width="16" height="16" alt="" />
-					 	</a>
-					</td>
+					<tr>
+						<td align="center">
+							<input type="submit" name="enviar" value="Validar" />
+						</td>
+					<tr>
 				</tr>
 			</table>
+			</form>
 		</div>
 	</c:if>
 </body>
