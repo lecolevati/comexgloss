@@ -41,7 +41,15 @@
 
 				<div class="column_w430 fl vl_divider">
 
-
+						<table align="center">
+							<tr>
+								<td >
+									<a href="#cadastrados">
+										<img src="./images/button.png" alt="" />
+									</a>
+								</td>
+							</tr>
+						</table>
 					<div class="header_01">Atualização de Termos</div>
 					<h2>
 						<c:out value="${mensagem}" />
@@ -126,7 +134,7 @@
 				<div class="margin_bottom_20 h_divider"></div>
 				<div class="margin_bottom_20"></div>
 
-				<div class="column_w920" align="center">
+				<div class="column_w920" align="center" id="cadastrados">
 					<jsp:include page="footerTable.jsp" />
 				</div>
 
