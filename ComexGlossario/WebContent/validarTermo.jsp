@@ -54,7 +54,11 @@
 				</tr>
 				<tr>
 					<td colspan="3">
-						<c:out value="${termo}"></c:out>
+						<textarea rows="15" cols="42" name="texto"
+										style="resize: none" readonly="readonly">
+							<c:out value="${termo}"></c:out>
+						</textarea>
+						
 						<input type="hidden" name="codigoTermo" value="${codigo}" />
 					</td>
 				</tr>

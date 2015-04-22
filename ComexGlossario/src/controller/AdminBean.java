@@ -143,6 +143,24 @@ public class AdminBean extends HttpServlet {
 							request.setAttribute("erro", erro);
 							request.getRequestDispatcher(url).forward(request, response);
 						}
+					} else {
+						if (request.getParameter("relogin") != null){
+							String erro = "";
+							String url = "admin.jsp";
+							String usuario = request.getParameter("usuario");
+							List<Disciplina> listaDisciplina = new ArrayList<Disciplina>();
+							try {
+								DisciplinaDao dDao = new DisciplinaDao();
+								listaDisciplina = dDao.consultaDisciplinas();
+							} catch (SQLException e) {
+								erro = e.getMessage();
+							} finally {
+								request.setAttribute("usrAdm", usuario);
+								request.setAttribute("listaDisciplina", listaDisciplina);
+								request.setAttribute("erro", erro);
+								request.getRequestDispatcher(url).forward(request, response);
+							}
+						}
 					}
 				}
 			}

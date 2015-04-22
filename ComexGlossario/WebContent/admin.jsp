@@ -43,7 +43,15 @@
 
 					<div class="column_w430 fl vl_divider">
 
-
+						<table align="center">
+							<tr>
+								<td >
+									<a href="${pageContext.request.contextPath}/adminGlossario?id=cadastro" accesskey="1" title="">
+										<img src="./images/button3.png" alt="" />
+									</a>
+								</td>
+							</tr>
+						</table>
 						<div class="header_01">ADMINISTRADOR</div>
 						<form action="admin" method="post">
 							<p>

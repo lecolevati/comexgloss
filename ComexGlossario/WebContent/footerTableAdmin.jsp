@@ -27,20 +27,20 @@
 				 			<td><c:out value="${termo.assunto}"/></td>
 				 			<td><c:out value="${termo.estadoStatus}"/></td>
 				 			<td align="center">
-				 				<a href="${pageContext.request.contextPath}/glossario?codigoTermo=<c:out value="${termo.codigo}"/>&sit=ver" accesskey="1" title="" >
+				 				<a href="${pageContext.request.contextPath}/adminGlossario?codigoTermo=<c:out value="${termo.codigo}"/>&sit=ver" accesskey="1" title="" >
 				 					<img src="./images/search.png" width="16" height="16" alt="" />
 				 				</a>
 				 			</td>
 				 			<td align="center">
 				 				<c:if test="${termo.codigoStatus <= 2}">
-				 					<a href="${pageContext.request.contextPath}/glossario?codigoTermo=<c:out value="${termo.codigo}"/>" accesskey="1" title="" >
+				 					<a href="${pageContext.request.contextPath}/adminGlossario?codigoTermo=<c:out value="${termo.codigo}"/>" accesskey="1" title="" >
 				 						<img src="./images/refresh.png" width="16" height="16" alt="" />
 				 					</a>
 				 				</c:if>
 				 			</td>
 				 			<td align="center">
 				 				<c:if test="${termo.codigoStatus <= 1}">
-				 					<a href="${pageContext.request.contextPath}/glossario?idexc=<c:out value="${termo.codigo}"/>&idal=<c:out value="${termo.raAluno}"/>" accesskey="1" title="" >
+				 					<a href="${pageContext.request.contextPath}/adminGlossario?idexc=<c:out value="${termo.codigo}"/>&idal=<c:out value="${termo.raAluno}"/>" accesskey="1" title="" >
 				 						<img src="./images/delete.png" width="16" height="16" alt="" />
 				 					</a>
 				 				</c:if>
