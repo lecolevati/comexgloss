@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Aluno;
+import model.Paises;
 import model.Termo;
 
 public class TermoDao {
@@ -100,6 +101,27 @@ public class TermoDao {
 		rs.close();
 		ps.close();
 		return t;
+	}
+
+	public List<Termo> listaTermosPorPais(Paises p) throws SQLException{
+		List<Termo> lista = new ArrayList<Termo>();
+		String sql = "select termo.termo, termo.codigo as cod, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, aluno.nome as nome_aluno from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status inner join aluno on aluno.ra = termo.ra_aluno where termo.codigo_pais = ? AND estado.codigo = 3 order by termo.assunto";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, p.getCodigo());
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			Termo t = new Termo();
+			t.setAssunto(rs.getString("assunto"));
+			t.setCodigo(rs.getInt("cod"));
+			t.setCodigoPais(rs.getInt("codigo_pais"));
+			t.setNomePais(rs.getString("pais"));
+			t.setNomeAluno(rs.getString("nome_aluno"));
+			t.setTexto(rs.getString("termo"));
+			lista.add(t);
+		}
+		rs.close();
+		ps.close();
+		return lista;
 	}
 	
 	private static java.sql.Date getCurrentDate() {

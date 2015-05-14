@@ -33,4 +33,33 @@ public class PaisesDao {
 		return lista;
 	}
 	
+	public Paises consultaPaisPorCodigo(Paises p) throws SQLException{
+		String sql = "SELECT codigo, nome, capital FROM paises WHERE codigo = ?";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, p.getCodigo());
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()){
+			p.setCodigo(rs.getInt("codigo"));
+			p.setNome(rs.getString("nome"));
+			p.setCapital(rs.getString("capital"));
+		}
+		return p;
+	}
+	
+	public List<Paises> consultaDisciplinasPorLetra(String letra) throws SQLException{
+		List<Paises> lista = new ArrayList<Paises>();
+		String sql = "SELECT codigo, nome, capital FROM paises WHERE nome LIKE ? ORDER BY nome";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setString(1, letra+"%");
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			Paises p = new Paises();
+			p.setCodigo(rs.getInt("codigo"));
+			p.setNome(rs.getString("nome"));
+			p.setCapital(rs.getString("capital"));
+			lista.add(p);
+		}
+		return lista;
+	}
+	
 }
