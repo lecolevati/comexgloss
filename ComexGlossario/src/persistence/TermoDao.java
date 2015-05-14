@@ -115,7 +115,11 @@ public class TermoDao {
 			t.setCodigo(rs.getInt("cod"));
 			t.setCodigoPais(rs.getInt("codigo_pais"));
 			t.setNomePais(rs.getString("pais"));
-			t.setNomeAluno(rs.getString("nome_aluno"));
+			if (rs.getString("nome_aluno").equals("admin")){
+				t.setNomeAluno("Equipe do Comex Glossário");
+			} else {
+				t.setNomeAluno(rs.getString("nome_aluno"));
+			}
 			t.setTexto(rs.getString("termo"));
 			lista.add(t);
 		}
