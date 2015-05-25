@@ -22,7 +22,7 @@ import persistence.DisciplinaDao;
 /**
  * Servlet implementation class AdminServlet
  */
-@WebServlet("/admin")
+@WebServlet("/admin") 
 public class AdminBean extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -52,6 +52,7 @@ public class AdminBean extends HttpServlet {
 			//TODO Validar usuario com senha
 		} else {
 			if (request.getParameter("BuscarAlunos") != null){
+				int turno = Integer.parseInt(request.getParameter("turno"));
 				String usuarioAdm = request.getParameter("usrAdm");
 				String erro = "";
 				String url = "admin.jsp";
@@ -68,7 +69,7 @@ public class AdminBean extends HttpServlet {
 				List<Aluno> listaAlunos = new ArrayList<Aluno>();
 				List<Disciplina> listaDisciplina = new ArrayList<Disciplina>();
 				try {
-					listaAlunos = admDao.listaAlunosPorDisciplinaStatus(d, codigoStatus);
+					listaAlunos = admDao.listaAlunosPorDisciplinaStatus(d, codigoStatus, turno);
 					DisciplinaDao dDao = new DisciplinaDao();
 					d = dDao.consultaDisciplina(d);
 					listaDisciplina = dDao.consultaDisciplinas();
@@ -86,6 +87,7 @@ public class AdminBean extends HttpServlet {
 				}
 			} else {
 				if (request.getParameter("BuscarTrabalhos") != null){
+					int turno = Integer.parseInt(request.getParameter("turno"));
 					String usuarioAdm = request.getParameter("usrAdm");
 					String erro = "";
 					String url = "admin.jsp";
@@ -100,7 +102,7 @@ public class AdminBean extends HttpServlet {
 					List<Termo> listaTermos = new ArrayList<Termo>();
 					try {
 						listaTermos = admDao.listaAssuntosPorAlunoDisciplinaStatus(a, d, codigoStatus);
-						listaAlunos = admDao.listaAlunosPorDisciplinaStatus(d, codigoStatus);
+						listaAlunos = admDao.listaAlunosPorDisciplinaStatus(d, codigoStatus, turno);
 						DisciplinaDao dDao = new DisciplinaDao();
 						listaDisciplina = dDao.consultaDisciplinas();
 						d = dDao.consultaDisciplina(d);

@@ -60,6 +60,14 @@
 								<td><input type="text" name="nomecadastro" size="40" /></td>
 							</tr>
 							<tr>
+								<td>Turno</td>
+								<td><select>
+										<option value="1">Manhã</option>
+										<option value="2">Tarde</option>
+										<!-- <option value="1">Noite</option> -->
+								</select></td>
+							</tr>
+							<tr>
 								<td colspan="2"><input type="submit" name="CadastroAluno"
 									value="Cadastrar" /></td>
 							</tr>

@@ -53,7 +53,8 @@ public class AlunoCadastroBean extends HttpServlet {
 			Aluno a = new Aluno();
 			a.setRa(request.getParameter("racadastro").trim());
 			a.setNome(request.getParameter("nomecadastro").trim());
-
+			a.setTurno(Integer.parseInt(request.getParameter("turno")));
+			
 			List<Termo> listaTermos = new ArrayList<Termo>();
 			try {
 				aDao.cadastraAluno(a);
@@ -70,11 +71,13 @@ public class AlunoCadastroBean extends HttpServlet {
 
 			} catch (SQLException e) {
 				erro = "Erro no processamento da requisição";
+				url = "index.jsp";
 			} finally {
 				request.setAttribute("erro", erro);
 				request.setAttribute("raAluno", a.getRa());
 				request.setAttribute("nomeAluno", a.getNome());
-
+				request.setAttribute("turnoAluno", a.getTurno());
+				
 				request.setAttribute("listaDisciplina", listaDisciplina);
 				request.setAttribute("listaPaises", listaPaises);
 				request.setAttribute("listaTermos", listaTermos);

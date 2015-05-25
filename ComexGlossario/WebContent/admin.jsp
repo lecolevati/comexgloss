@@ -76,6 +76,12 @@
 									</td>
 								</tr>
 								<tr>
+									<td>
+										<input name="turno" type="radio" value="1">Manhã</input>
+										<input name="turno" type="radio" value="2">Tarde</input>
+									</td>
+								</tr>
+								<tr>
 									<td>Status</td>
 									<td><select id="status" name="status">
 											<option value="0">
