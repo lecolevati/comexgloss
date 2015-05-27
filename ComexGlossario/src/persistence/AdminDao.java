@@ -162,5 +162,17 @@ public class AdminDao {
 		return t;
 	}
 
+	public int consultaTurnoAluno (Aluno a) throws SQLException{
+		String sql = "select turno from aluno where ra = ?";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setString(1, a.getRa());
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()){
+			return rs.getInt("turno");
+		} else {
+			return 0;
+		}
+		
+	}
 	
 }

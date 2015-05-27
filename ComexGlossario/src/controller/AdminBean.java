@@ -87,7 +87,6 @@ public class AdminBean extends HttpServlet {
 				}
 			} else {
 				if (request.getParameter("BuscarTrabalhos") != null){
-					int turno = Integer.parseInt(request.getParameter("turno"));
 					String usuarioAdm = request.getParameter("usrAdm");
 					String erro = "";
 					String url = "admin.jsp";
@@ -101,6 +100,7 @@ public class AdminBean extends HttpServlet {
 					List<Disciplina> listaDisciplina = new ArrayList<Disciplina>();
 					List<Termo> listaTermos = new ArrayList<Termo>();
 					try {
+						int turno = admDao.consultaTurnoAluno(a);
 						listaTermos = admDao.listaAssuntosPorAlunoDisciplinaStatus(a, d, codigoStatus);
 						listaAlunos = admDao.listaAlunosPorDisciplinaStatus(d, codigoStatus, turno);
 						DisciplinaDao dDao = new DisciplinaDao();
@@ -110,6 +110,7 @@ public class AdminBean extends HttpServlet {
 						a = aDao.consultaAluno(a);
 					} catch (SQLException e) {
 						erro = e.getMessage();
+						url = "index.jsp";
 					} finally {
 						request.setAttribute("usrAdm", usuarioAdm);
 						request.setAttribute("nmAluno", a.getNome());
