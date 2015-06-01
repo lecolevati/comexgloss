@@ -54,7 +54,7 @@ public class GlossarioBean extends HttpServlet {
 				List<Paises> listaPaises = new ArrayList<Paises>();
 				List<Termo> listaTermos = new ArrayList<Termo>();
 				Aluno a = new Aluno();
-				String url = "verGlossarioAdmin.jsp";
+				String url = "verGlossario.jsp";
 
 				String mensagem = "";
 				Termo t = new Termo();
@@ -67,7 +67,11 @@ public class GlossarioBean extends HttpServlet {
 					a.setRa(t.getRaAluno());
 					AlunoDao aDao = new AlunoDao();
 					a = aDao.consultaAluno(a);
-
+					
+					if (a.getNome().contains("admin")){
+						url = "verGlossarioAdmin.jsp";
+					}
+					
 					listaTermos = tDao.listaTermosPorAluno(a);
 
 					DisciplinaDao dDao = new DisciplinaDao();

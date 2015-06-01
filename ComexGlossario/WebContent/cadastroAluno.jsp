@@ -61,7 +61,7 @@
 							</tr>
 							<tr>
 								<td>Turno</td>
-								<td><select>
+								<td><select name="turno">
 										<option value="1">Manhã</option>
 										<option value="2">Tarde</option>
 										<!-- <option value="1">Noite</option> -->

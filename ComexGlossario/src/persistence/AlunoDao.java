@@ -31,10 +31,11 @@ public class AlunoDao {
 	}
 	
 	public void cadastraAluno(Aluno a) throws SQLException{
-		String sql = "INSERT INTO aluno VALUES (?,?)";
+		String sql = "INSERT INTO aluno VALUES (?,?,?)";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, a.getRa());
 		ps.setString(2, a.getNome());
+		ps.setInt(3, a.getTurno());
 		ps.execute();
 		ps.close();
 	}
