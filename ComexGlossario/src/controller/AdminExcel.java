@@ -84,7 +84,8 @@ public class AdminExcel extends HttpServlet {
 					sheet.addCell(label);
 					label = new Label(4, 1, "Qtd Aguardando");
 					sheet.addCell(label);
-
+					label = new Label(5, 1, "Total Entregas");
+					sheet.addCell(label);
 					for (Entregues e : listaEntregues) {
 
 						label = new Label(0, r, e.getRa());
@@ -98,6 +99,11 @@ public class AdminExcel extends HttpServlet {
 						sheet.addCell(label);
 						label = new Label(4, r, String.valueOf(e
 								.getAguardando()));
+						sheet.addCell(label);
+						label = new Label(5, r, String.valueOf(e
+								.getAguardando()
+								+ e.getAprovados()
+								+ e.getCorrigir()));
 						sheet.addCell(label);
 
 						r++;
