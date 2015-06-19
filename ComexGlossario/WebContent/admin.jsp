@@ -46,6 +46,13 @@
 						<table align="center">
 							<tr>
 								<td >
+									<a href="${pageContext.request.contextPath}/excel" accesskey="1" title="">
+										<img src="./images/buttonexcel.png" alt="" />
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td >
 									<a href="${pageContext.request.contextPath}/adminGlossario?id=cadastro" accesskey="1" title="">
 										<img src="./images/button3.png" alt="" />
 									</a>
