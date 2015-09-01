@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Paises;
+import model.Termo;
 
 public class PaisesDao {
 
@@ -60,6 +61,20 @@ public class PaisesDao {
 			lista.add(p);
 		}
 		return lista;
+	}
+	
+	public Paises consultaPaisPorCodigoTermo(Termo t) throws SQLException{
+		Paises p = new Paises();
+		String sql = "SELECT p.codigo, p.nome, p.capital FROM paises p INNER JOIN termo t ON p.codigo = t.codigo_pais WHERE t.codigo_pais = ?";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, t.getCodigoPais());
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()){
+			p.setCodigo(rs.getInt("codigo"));
+			p.setNome(rs.getString("nome"));
+			p.setCapital(rs.getString("capital"));
+		}
+		return p;
 	}
 	
 }

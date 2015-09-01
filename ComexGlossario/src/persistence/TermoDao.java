@@ -132,4 +132,56 @@ public class TermoDao {
 	    java.util.Date today = new java.util.Date();
 	    return new java.sql.Date(today.getTime());
 	}
+	
+	public List<Termo> listaAssuntosAprovados() throws SQLException {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT t.codigo, p.nome, t.assunto ");
+		sql.append("FROM termo t INNER JOIN paises p ");
+		sql.append("ON t.codigo_pais = p.codigo ");
+		sql.append("INNER JOIN estado e ");
+		sql.append("ON t.codigo_status = e.codigo ");
+		sql.append("WHERE e.codigo = 3 ");
+		sql.append("ORDER BY p.nome ");
+		List<Termo> lista = new ArrayList<Termo>();
+		PreparedStatement ps = c.prepareStatement(sql.toString());
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()){
+			Termo t = new Termo();
+			t.setCodigo(rs.getInt("codigo"));
+			t.setAssunto(rs.getString("assunto"));
+			t.setNomePais(rs.getString("nome"));
+			lista.add(t);
+		}
+		rs.close();
+		ps.close();
+		return lista;
+		
+	}
+	
+	public List<Termo> consultaListaTermosPorCodigo(Termo t) throws SQLException{
+		List<Termo> lista = new ArrayList<Termo>();
+		String sql = "select termo.comentarios, termo.termo, termo.codigo as cod, termo.ra_aluno, termo.codigo_disciplina as codigo_disciplina, disciplina.sigla, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status as codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, t.getCodigo());
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			Termo te = new Termo();
+			te.setAssunto(rs.getString("assunto"));
+			te.setCodigo(rs.getInt("cod"));
+			te.setCodigoDisciplina(rs.getInt("codigo_disciplina"));
+			te.setCodigoPais(rs.getInt("codigo_pais"));
+			te.setCodigoStatus(rs.getInt("codigo_status"));
+			te.setEstadoStatus(rs.getString("estado"));
+			te.setNomePais(rs.getString("pais"));
+			t.setRaAluno(rs.getString("ra_aluno"));
+			te.setSiglaDisciplina(rs.getString("sigla"));
+			te.setTexto(rs.getString("termo"));
+			te.setComentarios(rs.getString("comentarios"));
+			lista.add(te);
+		}
+		rs.close();
+		ps.close();
+		return lista;
+	}
+
 }
