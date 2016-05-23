@@ -10,6 +10,20 @@
 
 </head>
 <body>
+ <script language="javascript" type="text/javascript">
+ 
+ function alteraFonte (){
+		
+		
+		var txtaTexto = document.getElementById("txtaTexto");
+		var fonte = document.getElementById("hdTextoFonte");
+		
+		
+		txtaTexto.style.fontFamily = fonte.value;
+		
+		
+	}
+</script>
 	<c:if test="${termo ne null}">
 		<div align="center">
 			<form action="atualizaStatus" method="post">
@@ -54,12 +68,20 @@
 				</tr>
 				<tr>
 					<td colspan="3">
-						<textarea rows="15" cols="42" name="texto"
-										style="resize: none" readonly="readonly">
+						<textarea id="txtaTexto" rows="15" cols="42" name="texto"
+										style="resize: none" readonly="readonly"  >
 							<c:out value="${termo}"></c:out>
 						</textarea>
-						
 						<input type="hidden" name="codigoTermo" value="${codigo}" />
+						<input type="hidden" id="hdTextoFonte" name="textoFonte" value="${textoFonte}" />
+						
+						<script language="javascript" type="text/javascript">						
+						
+							alteraFonte();							
+						
+						</script>
+						
+						
 					</td>
 				</tr>
 				</table>
