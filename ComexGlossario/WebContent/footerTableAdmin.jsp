@@ -7,9 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 
-</script>
 </head>
 <body>
+
+<c:if test="${listaTermos != null}"> 
 				 	<table border="1">
 				 		<tr>
 				 			<td>Disciplina</td>
@@ -48,5 +49,6 @@
 				 		</tr>
 				 		</c:forEach>
 				 	</table>
+				 </c:if>
 </body>
 </html>
