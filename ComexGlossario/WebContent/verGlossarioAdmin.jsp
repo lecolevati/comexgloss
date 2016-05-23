@@ -14,6 +14,16 @@
 			field.value = field.defaultValue;
 
 	}
+	
+	function alteraFonte (){
+
+		var txtaTexto = document.getElementById("txtaTexto");
+		var fonte = document.getElementById("hdTextoFonte");
+		
+		txtaTexto.style.fontFamily = fonte.value;
+			
+	}
+	
 </script>
 </head>
 <body>
@@ -119,10 +129,19 @@
 							</c:if>
 							<tr>
 								<td>Texto (*Apenas texto)</td>
-								<td><textarea rows="15" cols="42" name="texto"
+								<td>
+									<textarea id="txtaTexto" rows="15" cols="42" name="texto"
 										style="resize: none" readonly="readonly">
 										<c:out value="${termoTexto}" />
-									</textarea> <input type="hidden" value="${termoCodigo}" name="termocodigo" />
+									</textarea>
+									<input type="hidden" value="${termoCodigo}" name="termocodigo" />
+									<input type="hidden" id="hdFonteTexto"  value="${textoFonte}" name="textofonte"  />
+									
+									<script language="javascript" type="text/javascript">						
+						
+										alteraFonte();							
+						
+									</script>
 								</td>
 							</tr>
 
