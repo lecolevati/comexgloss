@@ -83,6 +83,7 @@ public class GlossarioBean extends HttpServlet {
 				} catch (SQLException e) {
 					mensagem = "Falha no processamento da requisição !!";
 				} finally {
+
 					request.setAttribute("raAluno", a.getRa());
 					request.setAttribute("nomeAluno", a.getNome());
 					request.setAttribute("termoAssunto", t.getAssunto());
@@ -92,6 +93,7 @@ public class GlossarioBean extends HttpServlet {
 							t.getSiglaDisciplina());
 					request.setAttribute("termoPais", t.getNomePais());
 					request.setAttribute("termoCodigo", t.getCodigo());
+					request.setAttribute("textoFonte", t.getTextoFonte());
 					request.setAttribute("termoComentarios",
 							t.getComentarios());
 
@@ -127,6 +129,7 @@ public class GlossarioBean extends HttpServlet {
 							.getParameter("paises")));
 					t.setTexto(request.getParameter("texto"));
 					t.setRaAluno(request.getParameter("racadastro"));
+					t.setTextoFonte(alteraFonte(Integer.parseInt(request.getParameter("cbFonte"))));
 
 					TermoDao tDao = new TermoDao();
 
@@ -315,4 +318,43 @@ public class GlossarioBean extends HttpServlet {
 			}
 		}
 	}
+	
+           private String alteraFonte (int cbFonte) {
+        	 String font ="Arial";
+        	 
+        			if (cbFonte == 1){
+        			
+        				font = "Arial";
+        				
+        			}
+        			else{
+        				if (cbFonte == 2){
+        					font = "Arial Black";
+        				}
+        					
+        				else{
+        					if (cbFonte == 3){
+        						font = "Times New Roman";
+        						
+        					}
+        					else{
+        						if (cbFonte == 4){
+        							font = "Comic Sans MS";
+        							
+        						}
+        						else{
+        							if (cbFonte == 5){
+        								font = "Verdana";
+        								
+        							}
+        						}
+        					}
+        				}			
+        			}		
+        		
+        	   
+        	   return font;
+           }
+	
+	
 }
