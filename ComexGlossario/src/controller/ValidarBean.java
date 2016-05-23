@@ -66,6 +66,7 @@ public class ValidarBean extends HttpServlet {
 			request.setAttribute("assunto", t.getAssunto());
 			request.setAttribute("termo", t.getTexto());
 			request.setAttribute("codigo", t.getCodigo());
+			request.setAttribute("textoFonte", t.getTextoFonte());
 			request.setAttribute("erro", erro);
 			request.getRequestDispatcher(url).forward(request, response);
 		}
