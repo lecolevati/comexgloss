@@ -74,6 +74,7 @@ public class AdminGlossario extends HttpServlet {
 
 				PaisesDao pDao = new PaisesDao();
 				listaPaises = pDao.consultaDisciplinas();
+				
 				DisciplinaDao dDao = new DisciplinaDao();
 				listaDisciplina = dDao.consultaDisciplinas();
 
@@ -120,6 +121,7 @@ public class AdminGlossario extends HttpServlet {
 
 						PaisesDao pDao = new PaisesDao();
 						listaPaises = pDao.consultaDisciplinas();
+						
 
 					} catch (SQLException e) {
 						mensagem = "Falha no processamento da requisição !!";
@@ -127,6 +129,7 @@ public class AdminGlossario extends HttpServlet {
 						request.setAttribute("raAluno", a.getRa());
 						request.setAttribute("nomeAluno", a.getNome());
 						request.setAttribute("termoAssunto", t.getAssunto());
+						request.setAttribute("cbFonte", t.getTextoFonte());
 						request.setAttribute("termoTexto", t.getTexto());
 						request.setAttribute("termoAssunto", t.getAssunto());
 						request.setAttribute("termoDisciplina",
@@ -168,6 +171,7 @@ public class AdminGlossario extends HttpServlet {
 								.getParameter("paises")));
 						t.setTexto(request.getParameter("texto"));
 						t.setRaAluno(request.getParameter("racadastro"));
+						
 
 						TermoDao tDao = new TermoDao();
 
@@ -221,6 +225,8 @@ public class AdminGlossario extends HttpServlet {
 						t.setCodigo(Integer.parseInt(request
 								.getParameter("codigoTermo")));
 						TermoDao tDao = new TermoDao();
+
+						
 						try {
 							t = tDao.consultaTermosPorCodigo(t);
 
@@ -239,6 +245,7 @@ public class AdminGlossario extends HttpServlet {
 						} catch (SQLException e) {
 							mensagem = "Falha no processamento da requisição !!";
 						} finally {
+							
 							request.setAttribute("raAluno", a.getRa());
 							request.setAttribute("nomeAluno", a.getNome());
 							request.setAttribute("termoAssunto", t.getAssunto());
