@@ -21,7 +21,7 @@ public class TermoDao {
 	}
 
 	public void cadastraTermo(Termo t) throws SQLException {
-		String sql = "INSERT INTO termo (ra_aluno, codigo_disciplina, codigo_pais, assunto, termo, dthr) VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO termo (ra_aluno, codigo_disciplina, codigo_pais, assunto, termo, dthr, texto_fonte) VALUES (?,?,?,?,?,?,?)";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, t.getRaAluno());
 		ps.setInt(2, t.getCodigoDisciplina());
@@ -29,6 +29,7 @@ public class TermoDao {
 		ps.setString(4, t.getAssunto());
 		ps.setString(5, t.getTexto());
 		ps.setDate(6, getCurrentDate());
+		ps.setString(7, t.getTextoFonte());
 		ps.execute();
 		ps.close();
 	}
@@ -39,11 +40,12 @@ public class TermoDao {
 	 * @throws SQLException
 	 */
 	public void atualizaTermo(Termo t) throws SQLException {
-		String sql = "UPDATE termo SET termo = ?, codigo_status = 1, dthr = ? WHERE codigo = ?";
+		String sql = "UPDATE termo SET termo = ?, codigo_status = 1, dthr = ?, texto_fonte = ?  WHERE codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, t.getTexto());
 		ps.setDate(2, getCurrentDate());
 		ps.setInt(3, t.getCodigo());
+		ps.setString(4, t.getTextoFonte());
 		ps.execute();
 		ps.close();
 	}
@@ -81,7 +83,7 @@ public class TermoDao {
 	}
 	
 	public Termo consultaTermosPorCodigo(Termo t) throws SQLException{
-		String sql = "select termo.comentarios, termo.termo, termo.codigo as cod, termo.ra_aluno, termo.codigo_disciplina as codigo_disciplina, disciplina.sigla, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status as codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
+		String sql = "select termo.comentarios, termo.termo, termo.codigo as cod, termo.ra_aluno, termo.codigo_disciplina as codigo_disciplina, disciplina.sigla, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status as codigo_status, termo.texto_fonte, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, t.getCodigo());
 		ResultSet rs = ps.executeQuery();
@@ -97,6 +99,7 @@ public class TermoDao {
 			t.setSiglaDisciplina(rs.getString("sigla"));
 			t.setTexto(rs.getString("termo"));
 			t.setComentarios(rs.getString("comentarios"));
+			t.setTextoFonte(rs.getString("texto_fonte"));
 		}
 		rs.close();
 		ps.close();
@@ -105,7 +108,7 @@ public class TermoDao {
 
 	public List<Termo> listaTermosPorPais(Paises p) throws SQLException{
 		List<Termo> lista = new ArrayList<Termo>();
-		String sql = "select termo.termo, termo.codigo as cod, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, aluno.nome as nome_aluno from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status inner join aluno on aluno.ra = termo.ra_aluno where termo.codigo_pais = ? AND estado.codigo = 3 order by termo.assunto";
+		String sql = "select termo.termo, termo.codigo as cod, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.texto_fonte, aluno.nome as nome_aluno from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status inner join aluno on aluno.ra = termo.ra_aluno where termo.codigo_pais = ? AND estado.codigo = 3 order by termo.assunto";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, p.getCodigo());
 		ResultSet rs = ps.executeQuery();
@@ -121,6 +124,7 @@ public class TermoDao {
 				t.setNomeAluno(rs.getString("nome_aluno"));
 			}
 			t.setTexto(rs.getString("termo"));
+			t.setTextoFonte(rs.getString("texto_fonte"));
 			lista.add(t);
 		}
 		rs.close();
@@ -160,7 +164,7 @@ public class TermoDao {
 	
 	public List<Termo> consultaListaTermosPorCodigo(Termo t) throws SQLException{
 		List<Termo> lista = new ArrayList<Termo>();
-		String sql = "select termo.comentarios, termo.termo, termo.codigo as cod, termo.ra_aluno, termo.codigo_disciplina as codigo_disciplina, disciplina.sigla, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status as codigo_status, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
+		String sql = "select termo.comentarios, termo.termo, termo.codigo as cod, termo.ra_aluno, termo.codigo_disciplina as codigo_disciplina, disciplina.sigla, termo.codigo_pais as codigo_pais, paises.nome as pais, termo.assunto, termo.codigo_status as codigo_status, termo.texto_fonte, estado.estado from termo inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, t.getCodigo());
 		ResultSet rs = ps.executeQuery();
@@ -177,6 +181,7 @@ public class TermoDao {
 			te.setSiglaDisciplina(rs.getString("sigla"));
 			te.setTexto(rs.getString("termo"));
 			te.setComentarios(rs.getString("comentarios"));
+			te.setTextoFonte(rs.getString("texto_fonte"));
 			lista.add(te);
 		}
 		rs.close();
