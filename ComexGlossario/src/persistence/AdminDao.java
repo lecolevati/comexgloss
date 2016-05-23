@@ -140,7 +140,7 @@ public class AdminDao {
 	
 	public Termo consultaTermos(int codigoTermo) throws SQLException{
 		Termo t = new Termo();
-		String sql = "select termo.codigo, aluno.ra, aluno.nome, termo.codigo_disciplina, disciplina.sigla as disciplina, termo.codigo_pais, paises.nome as pais, termo.assunto,	termo.termo, termo.codigo_status, estado.estado from termo inner join aluno on aluno.ra = termo.ra_aluno inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
+		String sql = "select termo.codigo, aluno.ra, aluno.nome, termo.codigo_disciplina, disciplina.sigla as disciplina, termo.codigo_pais, paises.nome as pais, termo.assunto, termo.termo, termo.codigo_status, termo.texto_fonte, estado.estado from termo inner join aluno on aluno.ra = termo.ra_aluno inner join disciplina on termo.codigo_disciplina = disciplina.codigo inner join paises on paises.codigo = termo.codigo_pais inner join estado on estado.codigo = termo.codigo_status where termo.codigo = ?";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, codigoTermo);
 		ResultSet rs = ps.executeQuery();
@@ -152,6 +152,7 @@ public class AdminDao {
 			t.setSiglaDisciplina(rs.getString("disciplina"));
 			t.setCodigoPais(rs.getInt("codigo_pais"));
 			t.setAssunto(rs.getString("assunto"));
+			t.setTextoFonte(rs.getString("texto_fonte"));
 			t.setNomePais(rs.getString("pais"));
 			t.setCodigoStatus(rs.getInt("codigo_status"));
 			t.setEstadoStatus(rs.getString("estado"));
