@@ -53,12 +53,13 @@ public class AlunoBean extends HttpServlet {
 			AlunoDao aDao = new AlunoDao();
 			Aluno a = new Aluno();
 			a.setRa(request.getParameter("ra").trim());
-			
+			a.setNome("");
 			List<Termo> listaTermos = new ArrayList<Termo>();
 			try {
 				boolean valida = false;
 				boolean admin = false;
-				if (a.getRa().trim().equals("admin")){
+				// modificado de a.getRa para a.getNome
+				if (a.getNome().trim().equals("admin")){
 					admin = true;
 				} else {
 					valida = aDao.validaAluno(a);
@@ -99,6 +100,7 @@ public class AlunoBean extends HttpServlet {
 				request.setAttribute("listaTermos", listaTermos);
 				
 				request.setAttribute("erro", erro);
+
 				request.getRequestDispatcher(url).forward(request, response);
 			}
 		}
