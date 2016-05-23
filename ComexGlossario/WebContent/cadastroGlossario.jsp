@@ -14,6 +14,41 @@
 			field.value = field.defaultValue;
 
 	}
+	
+	function alteraFonte (fonte){
+		
+		
+		var txtaTexto = document.getElementById("txtaTexto");
+		if (fonte.value == '1'){
+		
+			txtaTexto.style.fontFamily = "Arial";
+			
+		}
+		else{
+			if (fonte.value == '2'){
+				txtaTexto.style.fontFamily = "Arial Black";
+			}
+				
+			else{
+				if (fonte.value == '3'){
+					txtaTexto.style.fontFamily = "Times New Roman";
+					
+				}
+				else{
+					if (fonte.value == '4'){
+						txtaTexto.style.fontFamily = "Comic Sans MS";
+						
+					}
+					else{
+						if (fonte.value == '5'){
+							txtaTexto.style.fontFamily = "Verdana";
+							
+						}
+					}
+				}
+			}			
+		}		
+	}
 </script>
 </head>
 <body>
@@ -106,10 +141,26 @@
 								<td>Assunto</td>
 								<td><input type="text" name="assunto" size="40" /></td>
 							</tr>
+							<tr></tr>
+							<tr></tr>
+							<tr></tr>
+							<tr>
+								<td>Fonte</td>
+								<td>
+									<select name="cbFonte" onchange="alteraFonte(this)" >
+										<option value="1">Arial</option>
+										<option value="2">Arial Black</option>
+										<option value="3">Times New Roman</option>
+										<option value="4">Comic Sans MS</option>
+										<option value="5">Verdana</option>
+									</select>
+								</td>
+							</tr>
+							
 							<tr>
 								<td>Texto (*Apenas texto)</td>
 								<td>
-									<textarea rows="15" cols="42" name="texto" style="resize:none"></textarea>
+									<textarea rows="15" cols="42" name="texto" id="txtaTexto" style="font-family:Arial;resize:none" ></textarea>
 								</td>
 							</tr>
 							<tr>
