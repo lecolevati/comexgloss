@@ -14,6 +14,8 @@ public class Termo {
 	private String estadoStatus;
 	private String nomeAluno;
 	private String comentarios;
+	private String textoFonte;
+
 	
 	public String getComentarios() {
 		return comentarios;
@@ -88,6 +90,12 @@ public class Termo {
 		this.estadoStatus = estadoStatus;
 	}
 	
+	public String getTextoFonte() {
+		return textoFonte;
+	}
+	public void setTextoFonte(String textoFonte) {
+		this.textoFonte = textoFonte;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
